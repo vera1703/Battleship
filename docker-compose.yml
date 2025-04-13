@@ -1,0 +1,55 @@
+version: '3.9'
+
+services:
+
+  gamedb:
+    image: postgres:15
+    container_name: gamedb
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: gamedb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 54321
+    volumes:
+      - gamedb_data:/var/lib/postgresql/data
+
+  playerdb:
+    image: postgres:15
+    container_name: playerdb
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_DB: playerdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 54321
+    volumes:
+      - playerdb_data:/var/lib/postgresql/data
+
+  shipdb:
+    image: postgres:15
+    container_name: shipdb
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_DB: shipdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 54321
+    volumes:
+      - shipdb_data:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+volumes:
+  gamedb_data:
+  playerdb_data:
+  shipdb_data:
+
