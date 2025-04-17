@@ -1,13 +1,32 @@
 package org.example.apigateway.dto;
 
-import java.util.List;
-
 public class GameDetailsDTO {
-    public GameDTO game;
-    public List<PlayerDTO> players;
 
-    public GameDetailsDTO(GameDTO game, List<PlayerDTO> players) {
+    private GameDTO game;
+    private PlayerDTO player;
+
+    public GameDetailsDTO() {
+    }
+
+    public GameDetailsDTO(GameDTO game, PlayerDTO player) {
         this.game = game;
-        this.players = players;
+        this.player = player;
+    }
+
+    // Getter & Setter
+    public GameDTO getGame() {
+        return game;
+    }
+
+    public void setGame(GameDTO game) {
+        this.game = game;
+    }
+
+    public PlayerDTO getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(PlayerDTO player) {
+        this.player = player;
     }
 }
