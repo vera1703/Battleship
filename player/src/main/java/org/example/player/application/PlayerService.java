@@ -6,6 +6,8 @@ import org.example.player.persistence.PlayerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 @Service
 public class PlayerService {
     private final PlayerRepository playerRepository;
@@ -62,5 +64,9 @@ public class PlayerService {
                 .map(Player::getId)
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Opponent not found"));
+    }
+
+    public List<Player> getAllPlayers() {
+        return playerRepository.findAll();
     }
 }

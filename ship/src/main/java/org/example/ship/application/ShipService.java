@@ -4,6 +4,7 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.example.ship.domain.Direction;
 import org.example.ship.domain.Ship;
 import org.example.ship.domain.ShipCell;
+import org.example.ship.dto.ShipCellDTO;
 import org.example.ship.dto.ShipDTO;
 import org.example.ship.persistence.ShipCellRepository;
 import org.example.ship.persistence.ShipRepository;
@@ -118,4 +119,7 @@ public class ShipService {
     public Long fallbackForOpponent(Long playerId, Throwable t) {
         throw new IllegalStateException("Opponent could not be determined (fallback): " + t.getMessage());
     }
+
+
+
 }

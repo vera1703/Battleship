@@ -14,7 +14,7 @@ public class OpenApiConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("Battleship API Gateway")
-                        .description("API Gateway für Battleship Microservices: game, player, ship")
+                        .description("API Gateway for Battleship")
                         .version("1.0")
                         .contact(new Contact()
                                 .name("Battleship Team")

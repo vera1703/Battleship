@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/players")
@@ -37,5 +39,15 @@ public class PlayerController {
     public ResponseEntity<Long> getOpponentId(@PathVariable Long playerId) {
         Long opponentId = playerService.findOpponentId(playerId);
         return ResponseEntity.ok(opponentId);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<PlayerDTO>> getAllPlayers() {
+        List<PlayerDTO> players = playerService.getAllPlayers()
+                .stream()
+                .map(PlayerDTO::from)
+                .toList();
+
+        return ResponseEntity.ok(players);
     }
 }

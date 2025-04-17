@@ -12,49 +12,39 @@ public class RouteConfig {
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
 
-                // game-service → passt zu @RequestMapping("/games")
-                .route("game-service", r -> r
-                        .path("/games/**")
-                        .filters(f -> f
-                                .circuitBreaker(c -> c
-                                        .setName("gameServiceCB")
-                                        .setFallbackUri("forward:/fallback/game"))
-                        )
-                        .uri("lb://game-service")
-                )
+                // Route für game-service (/games/** → game microservice)
+                .route("game", r -> r.path("/games/**")
+                        .filters(f -> f.circuitBreaker(c -> c
+                                .setName("gameServiceCircuitBreaker")
+                                .setFallbackUri("forward:/fallback/game")))
+                        .uri("lb://game"))
 
-                // player-service (Spieler) → @RequestMapping("/players")
-                .route("player-service", r -> r
-                        .path("/players/**")
-                        .filters(f -> f
-                                .circuitBreaker(c -> c
-                                        .setName("playerServiceCB")
-                                        .setFallbackUri("forward:/fallback/player"))
-                        )
-                        .uri("lb://player-service")
-                )
+                // Route für player-service (/players/**)
+                .route("player-players", r -> r.path("/players/**")
+                        .filters(f -> f.circuitBreaker(c -> c
+                                .setName("playerServiceCircuitBreaker")
+                                .setFallbackUri("forward:/fallback/player")))
+                        .uri("lb://player"))
 
-                // player-service (Guesses) → @RequestMapping("/guesses")
-                .route("guesses-service", r -> r
-                        .path("/guesses/**")
-                        .filters(f -> f
-                                .circuitBreaker(c -> c
-                                        .setName("guessesServiceCB")
-                                        .setFallbackUri("forward:/fallback/player"))
-                        )
-                        .uri("lb://player-service")
-                )
+                // Route für player-service (/guesses/**)
+                .route("player-guesses", r -> r.path("/guesses/**")
+                        .filters(f -> f.circuitBreaker(c -> c
+                                .setName("guessServiceCircuitBreaker")
+                                .setFallbackUri("forward:/fallback/player")))
+                        .uri("lb://player"))
 
-                // ship-service → @RequestMapping("/ships")
-                .route("ship-service", r -> r
-                        .path("/ships/**")
-                        .filters(f -> f
-                                .circuitBreaker(c -> c
-                                        .setName("shipServiceCB")
-                                        .setFallbackUri("forward:/fallback/ship"))
-                        )
-                        .uri("lb://ship-service")
-                )
+                // Route für ship-service (/ships/**)
+                .route("ship", r -> r.path("/ships/**")
+                        .filters(f -> f.circuitBreaker(c -> c
+                                .setName("shipServiceCircuitBreaker")
+                                .setFallbackUri("forward:/fallback/ship")))
+                        .uri("lb://ship"))
+
+                // Swagger UI über Gateway erreichbar
+                .route("openapi", r -> r.path("/v3/api-docs/**")
+                        .uri("lb://api-gateway"))
+                .route("swagger-ui", r -> r.path("/swagger-ui/**")
+                        .uri("lb://api-gateway"))
 
                 .build();
     }
